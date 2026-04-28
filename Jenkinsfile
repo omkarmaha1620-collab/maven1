@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven'   // must match Jenkins tool name
+        maven 'Maven'
         jdk 'jdk21'
     }
 
@@ -15,11 +15,18 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean compile'
             }
         }
 
-        stage('Run Application') {
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        }
+
+        stage('Run') {
             steps {
                 sh 'java -jar target/*.jar'
             }
